@@ -85,10 +85,38 @@ class ApiSaleController
         return "Gia hạn thành công";
     }
     function update_sale($request){
-        // Package::where("id", $request->id)
-        //         ->update(["name" => $request->name, "price" => $request->price,
-        //                     "time" => $request->time, "number_account" => $request->number_account]);
-        // return "Cập nhật thành công";
+        $data = Sale::where("id", $request->id)->first();
+        $package = Package::where('id', $request->package_id)->first();
+        $price = $package->price;
+        $coupon_id = NULL;
+        if (isset($request->coupon_id)) {
+            $sale = Sale::where("customer_id", $request->customer_id)
+                        ->where("coupon_id", $request->coupon_id)
+                        ->first();
+            if (isset($sale)) {
+                return "Mã Khuyến mại đã được dùng. Vui lòng chọn mã khuyến mại khác";
+            } else {
+                $coupon = Coupon::where("id", $request->coupon_id)->where("end_time", ">", time())->first();
+                if (isset($coupon)) {
+                    $coupon_id = $request->coupon_id;
+                    if ($coupon->type == "percent") {
+                        $total_money = $price * (100-$coupon->discount) / 100;
+                    } else {
+                        $total_money = $price - $coupon->discount;
+                    }
+                } else {
+                    return "Mã khuyến mại đã hết hạn.Vui lòng chọn mã khuyến mại khác";
+                }
+            }
+        }else {
+            $total_money = $price;
+        }
+        $money = $total_money - $data->total_money;
+        $start_time = $data->start_time;
+        $end_time = $start_time + ($package->time * 86400);
+        Sale::where("id", $request->id)->update(["package_id" => $request->package_id, "start_time" => $start_time, "end_time" => $end_time,
+                                                "price" => $price, "coupon_id" => $coupon_id, "total_money" => $total_money, "note" => $request->note]);
+        return "Cập nhật thành công/ Giá chênh lệch: ". number_format($money);
     }
     
     function action_sale($request){
@@ -117,7 +145,7 @@ class ApiSaleController
             case 'add_sale':
                 $data = $this->add_sale($request);
             break;
-            case 'update_package':
+            case 'update_sale':
                 $data = $this->update_sale($request);
             break;
             case 'action_sale':
