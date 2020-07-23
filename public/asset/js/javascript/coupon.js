@@ -18,6 +18,9 @@
 		select: !1,
         filter: !0,
         ordering: !0,
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Vietnamese.json"
+        },
         columns: [{
         	data: "stt",
             className: "text-center",
