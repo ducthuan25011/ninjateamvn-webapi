@@ -14,9 +14,11 @@ class ApiAccountController
 {   
     function load_account($request){
         $data = Facebook::select("tb_facebook.id", "tb_facebook.uid", "tb_facebook.name", "tb_facebook.token", "tb_customer.name")
-                        ->join("tb_customer", "tb_facebook.customer_id", "=", "tb_customer.id")
-                        ->where("tb_facebook.customer_id", $request->customer_id)
-                        ->get();
+                        ->join("tb_customer", "tb_facebook.customer_id", "=", "tb_customer.id");
+        if (isset($request->customer_id) && $request->customer_id != "") {
+            $data = $data->where("tb_facebook.customer_id", $request->customer_id);
+        }
+        $data = $data->get();
         return $data;
     }
     function add_account($request){

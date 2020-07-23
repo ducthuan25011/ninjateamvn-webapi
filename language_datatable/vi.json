@@ -1,0 +1,17 @@
+{
+	"emptyTable": "Không có dữ liệu hiển thị",
+	"info": "Đang xem _START_ đến _END_ trong tổng số _TOTAL_ bản ghi",
+	"infoEmpty": "Đang xem 0 đến 0 trong tổng số 0 bản ghi",
+	"infoFiltered": "<br>(Được lọc từ _MAX_ bản ghi)",
+	"lengthMenu": "Hiển thị _MENU_",
+	"paginate": {
+		"first": "Đầu",
+		"last": "Cuối",
+		"next": "Tiếp",
+		"previous": "Trước"
+	},
+	"processing": "Đang tải dữ liệu ...",
+	"search": "Tìm kiếm:",
+	"searchPlaceholder": "Nhập nội dung tìm kiếm",
+	"zeroRecords": "Không có dữ liệu cần hiển thị"
+}

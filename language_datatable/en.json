@@ -1,0 +1,17 @@
+{
+	"emptyTable": "There is no data to display",
+	"info": "Viewing _START_ to _END_ of _TOTAL_ records",
+	"infoEmpty": "Viewing 0 to 0 of 0 records",
+	"infoFiltered": "<br>(Filtered from _MAX_ records)",
+	"lengthMenu": "Show _MENU_",
+	"paginate": {
+		"first": "head",
+		"last": "The End",
+		"next": "Next",
+		"previous": "Before"
+	},
+	"processing": "Loading ...",
+	"search": "Search:",
+	"searchPlaceholder": "Enter the search text",
+	"zeroRecords": "There is no data to display"
+}

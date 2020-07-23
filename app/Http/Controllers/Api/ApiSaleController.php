@@ -59,7 +59,8 @@ class ApiSaleController
                     if ($coupon->type == "percent") {
                         $data->total_money = $data->price * (100-$coupon->discount) / 100;
                     } else {
-                        $data->total_money = $data->price - $coupon->discount;
+                        $total_money = $data->price - $coupon->discount;
+                        $data->total_money = $total_money > 0 ? $total_money : 0;
                     }
                 } else {
                     return "Mã khuyến mại đã hết hạn.Vui lòng chọn mã khuyến mại khác";
@@ -92,6 +93,7 @@ class ApiSaleController
         if (isset($request->coupon_id)) {
             $sale = Sale::where("customer_id", $request->customer_id)
                         ->where("coupon_id", $request->coupon_id)
+                        ->where("id" , "!=", $request->id)
                         ->first();
             if (isset($sale)) {
                 return "Mã Khuyến mại đã được dùng. Vui lòng chọn mã khuyến mại khác";
@@ -102,7 +104,7 @@ class ApiSaleController
                     if ($coupon->type == "percent") {
                         $total_money = $price * (100-$coupon->discount) / 100;
                     } else {
-                        $total_money = $price - $coupon->discount;
+                        $total_money = ($price - $coupon->discount) > 0 ? ($price - $coupon->discount) : 0;
                     }
                 } else {
                     return "Mã khuyến mại đã hết hạn.Vui lòng chọn mã khuyến mại khác";
